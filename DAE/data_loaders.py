@@ -14,11 +14,11 @@ def addNoise(data):
     return data_copy
 
 
-class DataLoader(Dataset):
+class AEDataset(Dataset):
     def __init__(self, data, transform = None, target_transform = None):
         # Input and target are same
-        self.X = data
-        self.y = data
+        self.X = [torch.tensor(row) for row in data]
+        self.y = [torch.tensor(row) for row in data]
 
         # Keep target transform always None
         # Input transform should be non for basic AE, but noising function for DAE

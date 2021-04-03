@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 from torch.optim.lr_scheduler import LambdaLR
 from model import DAE
+from data_loaders import AEDataset
 
 def train_loop(data_loader, model, loss_fn, optimizer):
     size = len(data_loader.dataset)
@@ -68,7 +69,7 @@ if __name__ == "__main__":
     latent_size = 8
     model = DAE(input_size, latent_size)
 
-    data = pd.read_csv("model/training_test_data.csv")
+    data = pd.read_csv("../model/training_test_data.csv")
     data.sample(frac = 1, random_state = 200)
     data = data.to_numpy()
     size = data.shape[0]
@@ -78,7 +79,9 @@ if __name__ == "__main__":
     validation_data = data[int(0.7*size) : int(0.9*size)]
     test_data = data[int(0.9*size) :]
 
-    print(test_data)
+    min_values, max_values = find_min_max(training_data)
+
+    training_dataset = AEDataset(training_data[:, :-7])
 
     # for t in range(epochs):
     #     print(f"Epoch {t+1}\n-------------------------------")
