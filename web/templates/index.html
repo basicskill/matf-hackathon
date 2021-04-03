@@ -69,8 +69,14 @@
   <!-- ======= Hero Section ======= -->
   <section id="hero">
     <div class="hero-container" data-aos="fade-up">
-      <h1>Welcome to Squad</h1>
-      <h2>We are team of talented designers making websites with Bootstrap</h2>
+      <div class="over-hero" style = "background-color:rgba(255, 0, 0, {% for item in data %} {{item.opacity}}  {% endfor %});     height: 100%;      width: 100%;      position: absolute; z-index: -1;">
+      </div>
+      <h1>
+        {% for item in data %}
+            {{item.emoji}}
+        {% endfor %}
+      </h1>
+      <h2>Air quality right now in Belgrade</h2>
       <a href="#pred" class="btn-get-started scrollto"><i class="bx bx-chevrons-down"></i></a>
     </div>
   </section><!-- End Hero -->
