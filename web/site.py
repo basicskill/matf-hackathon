@@ -6,11 +6,10 @@ import numpy as np
 import json
 
 from flask import Flask , render_template
-app = Flask(__name__)
+app = Flask(__name__,static_url_path="/assets")
+app.static_folder="templates/assets"
 
 def create_plot():
-
-
     N = 40
     x = np.linspace(0, 1, N)
     y = np.random.randn(N)
@@ -28,11 +27,23 @@ def create_plot():
 
     return graphJSON
 
-@app.route('/')
-def index():
+@app.route('/pollution_days')
+def index_days():
 
     bar = create_plot()
-    return render_template('index.html', plot=bar)
+    return render_template('test.html', plot=bar)
+
+@app.route('/pollution_months')
+def index_months():
+
+    bar = create_plot()
+    return render_template('test.html', plot=bar)
+
+@app.route('/pollution_hours')
+def index_hours():
+
+    bar = create_plot()
+    return render_template('test.html', plot=bar)
 
 
 @app.route('/api/predictions')
