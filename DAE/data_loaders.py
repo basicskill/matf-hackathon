@@ -5,20 +5,20 @@ from torchvision.transforms import ToTensor, Lambda
 import os
 import pandas as pd
 import numpy as np
+from numba import jit
 
 def addNoise(data):
     data_copy = data.clone()
-    n = data_copy.numpy()
-    mask = np.random.rand(n.shape[0], n.shape[1]) > 0.8
-    np.place(n, mask, -1)
+    mask = torch.cuda.FloatTensor(data.shape).uniform_() > 0.2
+    data_copy[mask] = -1
     return data_copy
 
 
 class AEDataset(Dataset):
     def __init__(self, data, transform = None, target_transform = None):
         # Input and target are same
-        self.X = [torch.tensor(row) for row in data]
-        self.y = [torch.tensor(row) for row in data]
+        self.X = [torch.tensor(row).float().to('cuda') for row in data]
+        self.y = [torch.tensor(row).float().to('cuda') for row in data]
 
         # Keep target transform always None
         # Input transform should be non for basic AE, but noising function for DAE
@@ -39,5 +39,5 @@ class AEDataset(Dataset):
         if self.target_transform:
             assert(False)
 
-        sample = {"input": inp, "target": target}
+        sample = [inp, target]
         return sample
