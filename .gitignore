@@ -1,3 +1,5 @@
 *.zip
 MATF_Hackathon_2021/
 .ipynb_checkpoints/
+.vscode/
+__pycache__
