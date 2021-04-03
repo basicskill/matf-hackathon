@@ -4,11 +4,18 @@ from torchvision import datasets
 from torchvision.transforms import ToTensor, Lambda
 import os
 import pandas as pd
+import numpy as np
+
+def addNoise(data):
+    data_copy = data.clone()
+    n = data_copy.numpy()
+    mask = np.random.rand(n.shape[0], n.shape[1]) > 0.8
+    np.place(n, mask, -1)
+    return data_copy
+
 
 class DataLoader(Dataset):
-    def __init__(self, data_file, transform = None, target_transform = None):
-        data = pd.read_csv(data_file)
-
+    def __init__(self, data, transform = None, target_transform = None):
         # Input and target are same
         self.X = data
         self.y = data

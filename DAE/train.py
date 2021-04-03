@@ -41,6 +41,18 @@ if __name__ == "__main__":
     latent_size = 8
     model = DAE(input_size, latent_size)
 
-    for t in range(epochs):
-        print(f"Epoch {t+1}\n-------------------------------")
-        # train_loop()
+    data = pd.read_csv("model/training_test_data.csv")
+    data.sample(frac = 1, random_state = 200)
+    data = data.to_numpy()
+    size = data.shape[0]
+
+
+    training_data = data[: int(0.7*size)]
+    validation_data = data[int(0.7*size) : int(0.9*size)]
+    test_data = data[int(0.9*size) :]
+
+    print(test_data)
+
+    # for t in range(epochs):
+    #     print(f"Epoch {t+1}\n-------------------------------")
+    #     # train_loop()
