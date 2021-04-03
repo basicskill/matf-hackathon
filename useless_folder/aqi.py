@@ -24,6 +24,8 @@ def calculate_aqi(co, no2, o3, pm10, p25, so2):
     aqi_max = 0
     for pol in pollusions:
         j = len(boundaries[pol])-1
+        if data[pol] == -1
+            continue
         while data[pol] < boundaries[pol][j]:
             j-=1
         low_index = j
