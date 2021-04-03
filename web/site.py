@@ -51,6 +51,7 @@ def index_hours():
     bar = create_plot()
     return render_template('test.html', plot=bar)
 
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -58,7 +59,7 @@ def index():
 
 @app.route('/api/predictions')
 def predictions():
-    return {"predictions": list(range(24 * 7))}
+    return {"predictions": [[{"aqi": 250, "so2": 100, "b": 100, "co": 100, "no2": 100, "o3": 100, "pm10": 100, "pm25": 100}]*24]*5}
 
 
 if __name__ == "__main__":
