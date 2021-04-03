@@ -5,9 +5,12 @@ import pandas as pd
 import numpy as np
 import json
 
-from flask import Flask , render_template
-app = Flask(__name__,static_url_path="/assets")
-app.static_folder="templates/assets"
+from flask import Flask, render_template
+
+
+app = Flask(__name__, static_url_path="/assets")
+app.static_folder = "templates/assets"
+
 
 def create_plot():
     N = 40
@@ -27,11 +30,13 @@ def create_plot():
 
     return graphJSON
 
+
 @app.route('/pollution_days')
 def index_days():
 
     bar = create_plot()
     return render_template('test.html', plot=bar)
+
 
 @app.route('/pollution_months')
 def index_months():
@@ -39,11 +44,16 @@ def index_months():
     bar = create_plot()
     return render_template('test.html', plot=bar)
 
+
 @app.route('/pollution_hours')
 def index_hours():
 
     bar = create_plot()
     return render_template('test.html', plot=bar)
+
+@app.route("/")
+def index():
+    return render_template("index.html")
 
 
 @app.route('/api/predictions')
@@ -52,4 +62,4 @@ def predictions():
 
 
 if __name__ == "__main__":
-    app.run(debug =True)
+    app.run(debug=True)
