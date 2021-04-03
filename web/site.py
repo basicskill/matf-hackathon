@@ -4,6 +4,7 @@ import plotly.graph_objs as go
 import pandas as pd
 import numpy as np
 import json
+import random
 
 from flask import Flask, render_template
 
@@ -59,7 +60,7 @@ def index():
 
 @app.route('/api/predictions')
 def predictions():
-    return {"predictions": [[{"aqi": 250, "so2": 100, "b": 100, "co": 100, "no2": 100, "o3": 100, "pm10": 100, "pm25": 100}]*24]*5}
+    return {"predictions": [[{"aqi": random.randint(0, 500), "so2": 100, "b": 100, "co": 100, "no2": 100, "o3": 100, "pm10": 100, "pm25": 100} for _ in range(24)] for _ in range(5)]}
 
 
 if __name__ == "__main__":
