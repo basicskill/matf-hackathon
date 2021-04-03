@@ -34,5 +34,11 @@ def index():
     bar = create_plot()
     return render_template('index.html', plot=bar)
 
+
+@app.route('/api/predictions')
+def predictions():
+    return {"predictions": list(range(24 * 7))}
+
+
 if __name__ == "__main__":
     app.run(debug =True)
