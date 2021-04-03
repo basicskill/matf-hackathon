@@ -5,6 +5,7 @@ import pandas as pd
 import numpy as np
 import json
 import random
+import datetime
 
 from flask import Flask, render_template
 
@@ -60,7 +61,8 @@ def index():
 
 @app.route('/api/predictions')
 def predictions():
-    return {"predictions": [[{"aqi": random.randint(0, 500), "so2": 100, "b": 100, "co": 100, "no2": 100, "o3": 100, "pm10": 100, "pm25": 100} for _ in range(24)] for _ in range(5)]}
+    now = datetime.date.today()
+    return {"predictions": [[{"aqi": random.randint(0, 500), "so2": 100, "b": 100, "co": 100, "no2": 100, "o3": 100, "pm10": 100, "pm25": 100, "time": f"{h:02}:00", "date": "today" if d == 0 else ("tomorrow" if d == 1 else (now+datetime.timedelta(d)).strftime("%d. %m."))} for h in range(24)] for d in range(5)]}
 
 
 if __name__ == "__main__":
