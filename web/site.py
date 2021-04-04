@@ -79,8 +79,8 @@ def index():
 
 @app.route('/api/predictions')
 def predictions():
-    now = datetime.date.today()
-    return {"predictions": [[{"aqi": random.randint(0, 600), "so2": random.randint(0, 1600), "b": random.randint(0, 600), "co": random.randint(0, 35), "no2": random.randint(0, 400), "o3": random.randint(0, 750), "pm10": random.randint(0, 450), "pm25": random.randint(0, 250), "time": f"{h:02}:00", "date": "today" if d == 0 else ("tomorrow" if d == 1 else (now+datetime.timedelta(d)).strftime("%d. %m."))} for h in range(24)] for d in range(5)]}
+    now = datetime.datetime.now()
+    return {"predictions": [[{"aqi": random.randint(0, 600), "so2": random.randint(0, 1600), "b": random.randint(0, 600), "co": random.randint(0, 35), "no2": random.randint(0, 400), "o3": random.randint(0, 750), "pm10": random.randint(0, 450), "pm25": random.randint(0, 250), "time": f"{h:02}:00", "date": "today" if d == 0 else ("tomorrow" if d == 1 else (now+datetime.timedelta(d)).strftime("%d. %m."))} for h in range(now.hour if d == 0 else 0, 24)] for d in range(5)]}
 
 
 if __name__ == "__main__":
