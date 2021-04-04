@@ -80,47 +80,72 @@ def create_plot_aqi(csv):
 
     return graphJSON
 
+
+def create_plot_confusion(csv):
+
+    site_data = pd.read_csv(csv)
+    class_names = ['month',	'hour',	'T', 'P', 'P0', 'CO', 'NO2', 'O3', 'PM10', 'PM25', 'SO2']
+    layout = {
+        "title": "Correlation Weather | Pollution ", 
+        "xaxis": {"title": "Predicted value"}, 
+        "yaxis": {"title": "Real value"}
+    }
+
+    data = [go.Heatmap(z=site_data.to_numpy()[:,1:],
+                        x=class_names,
+                        y=class_names,
+                        hoverongaps=False)
+    ]
+    graphJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return graphJSON
+
 @app.route('/pollution_hours_co')
 def index_hours_co():
-    csv = 'model/website_daily.csv'
+    csv = 'data/website_daily.csv'
     bar = create_plot_co(csv)
     return render_template('test.html', plot=bar)
 
 @app.route('/pollution_hours_aqi')
 def index_hours_aqi():
-    csv = 'model/website_daily.csv'
+    csv = 'data/website_daily.csv'
     bar = create_plot_aqi(csv)
     return render_template('test.html', plot=bar)
 
 
 @app.route('/pollution_months_co')
 def index_months_co():
-    csv = 'model/website_yearly.csv'
+    csv = 'data/website_yearly.csv'
     bar = create_plot_co(csv)
     return render_template('test.html', plot=bar)
 
 @app.route('/pollution_months_aqi')
 def index_months_aqi():
-    csv = 'model/website_yearly.csv'
+    csv = 'data/website_yearly.csv'
     bar = create_plot_aqi(csv)
     return render_template('test.html', plot=bar)
 
 @app.route('/pollution_days_co')
 def index_days_co():
-    csv = 'model/website_monthly.csv'
+    csv = 'data/website_monthly.csv'
     bar = create_plot_co(csv)
     return render_template('test.html', plot=bar)
 
 @app.route('/pollution_days_aqi')
 def index_days_aqi():
-    csv = 'model/website_monthly.csv'
+    csv = 'data/website_monthly.csv'
     bar = create_plot_aqi(csv)
     return render_template('test.html', plot=bar)
 
+@app.route('/correlation')
+def index_corellations():
+    csv = 'data/correlations.csv'
+    bar = create_plot_confusion(csv)
+    return render_template('test.html', plot=bar)
 
 @app.route("/")
 def index():
-    score = 60
+    score = 30
     decided = '😌 Bad'
     opacity = 0.8
     if score > 25:
