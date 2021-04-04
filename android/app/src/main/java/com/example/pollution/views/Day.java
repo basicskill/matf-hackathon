@@ -52,10 +52,23 @@ public class Day extends ConstraintLayout {
         }
         double avgAqi = sumAqi / predictions.length;
 
-        findViewById(R.id.day_root).setBackgroundColor(Colors.fromAqi(avgAqi));
+        //int color = Colors.fromAqi(avgAqi);
+        int color = Colors.fromAqi(predictions[0].getAqi());
+        findViewById(R.id.day_root).setBackgroundColor(color);
+        findViewById(R.id.scroll_hours).setBackgroundColor(color | 0xff<<24);
 
         ((TextView) findViewById(R.id.text_day)).setText(predictions[0].getDate());
-        ((TextView) findViewById(R.id.text_aqi)).setText(String.valueOf((int) avgAqi));
+        String emoji = "";
+        if (avgAqi < 100) {
+            emoji = "\uD83D\uDE42";
+        }
+        else if (avgAqi < 300) {
+            emoji = "\uD83D\uDE10";
+        }
+        else {
+            emoji = "\uD83D\uDE41";
+        }
+        ((TextView) findViewById(R.id.text_aqi)).setText(String.valueOf((int) avgAqi) + " " + emoji);
 
         LinearLayout hours = findViewById(R.id.linear_hours);
         for (Prediction prediction : predictions) {

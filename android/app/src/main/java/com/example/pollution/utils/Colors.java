@@ -10,8 +10,8 @@ public class Colors {
     }
 
     public static int fromAqi(double aqi) {
-        int start = 0xff00a4d1;
-        int end = 0xff18333b;
+        int start = 0xa000a4d1;
+        int end = 0xd018333b;
         return ColorUtils.blendARGB(start, end, clip(aqi / 500.0));
     }
 
