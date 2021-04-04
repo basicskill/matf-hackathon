@@ -100,7 +100,8 @@ if __name__ == "__main__":
     
     loss_fn = nn.MSELoss()
     optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9)
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'min')
+    DECAY = 0.95
+    scheduler = LambdaLR(optimizer, lr_lambda = lambda t : DECAY**t)
 
 
     data = pd.read_csv("model/training_test_data.csv")
@@ -145,9 +146,12 @@ if __name__ == "__main__":
         print(f"Epoch {t+1}\n-------------------------------")
         train_loop(training_loader, model, loss_fn, optimizer)
         val_loss = valid_loop(validation_loader, model, loss_fn)
-        scheduler.step(val_loss)
+        print(optimizer.param_groups[0]['lr'])
         torch.save(model, "DAE/weather_train/model" + str(t) + ".pth")
         valid_losses.append(val_loss)
+
+        if t % 200 == 0:    
+            scheduler.step()
     
     np.savetxt("DAE/weather_train/valid.txt", np.array(valid_losses))
     test(test_loader, model, loss_fn)
