@@ -69,8 +69,14 @@
   <!-- ======= Hero Section ======= -->
   <section id="hero">
     <div class="hero-container" data-aos="fade-up">
-      <h1>Welcome to Squad</h1>
-      <h2>We are team of talented designers making websites with Bootstrap</h2>
+      <div class="over-hero" style = "background-color:rgba(255, 0, 0, {% for item in data %} {{item.opacity}}  {% endfor %});     height: 100%;      width: 100%;      position: absolute; z-index: -1;">
+      </div>
+      <h1>
+        {% for item in data %}
+            {{item.emoji}}
+        {% endfor %}
+      </h1>
+      <h2>Air quality right now in Belgrade</h2>
       <a href="#pred" class="btn-get-started scrollto"><i class="bx bx-chevrons-down"></i></a>
     </div>
   </section><!-- End Hero -->
@@ -164,10 +170,9 @@
         </div>
       </section><!-- End Cta Section -->
 
-      <div class="row">
         <div class="col-md-12 col-lg-12 d-flex align-items-center mb-5 mb-lg-0">
           <iframe src="/pollution_days" scrolling = "no" height = 500 style = " width: 100%;"></iframe>
-      </div>
+        </div>
 
       <!-- ======= Cta Section ======= -->
       <section class="cta">
@@ -180,10 +185,8 @@
 
         </div>
       </section><!-- End Cta Section -->
-
-      <div class="row">
-        <div class="col-md-12 col-lg-12 d-flex align-items-center mb-5 mb-lg-0">
-          <iframe src="/pollution_months" scrolling = "no" height = 500 style = " width: 100%;"></iframe>
+      <div class="col-md-12 col-lg-12 d-flex align-items-center mb-5 mb-lg-0">
+        <iframe src="/pollution_months" scrolling = "no" height = 500 style = " width: 100%;"></iframe>
       </div>
     </div> 
 
@@ -231,9 +234,9 @@
             </div>
           </section><!-- End Cta Section -->
 
-          <div class="row">
-            <div class="col-md-12 col-lg-12 d-flex align-items-center mb-5 mb-lg-0">
-              <iframe src="/pollution_days" scrolling = "no" height = 500 style = " width: 100%;"></iframe>
+
+          <div class="col-md-12 col-lg-12 d-flex align-items-center mb-5 mb-lg-0">
+            <iframe src="/pollution_days" scrolling = "no" height = 500 style = " width: 100%;"></iframe>
           </div>
 
           <!-- ======= Cta Section ======= -->
@@ -248,9 +251,8 @@
             </div>
           </section><!-- End Cta Section -->
 
-          <div class="row">
-            <div class="col-md-12 col-lg-12 d-flex align-items-center mb-5 mb-lg-0">
-              <iframe src="/pollution_months" scrolling = "no" height = 500 style = " width: 100%;"></iframe>
+          <div class="col-md-12 col-lg-12 d-flex align-items-center mb-5 mb-lg-0">
+            <iframe src="/pollution_months" scrolling = "no" height = 500 style = " width: 100%;"></iframe>
           </div>
         </div> 
 
@@ -298,9 +300,8 @@
             </div>
           </section><!-- End Cta Section -->
 
-          <div class="row">
-            <div class="col-md-12 col-lg-12 d-flex align-items-center mb-5 mb-lg-0">
-              <iframe src="/pollution_days" scrolling = "no" height = 500 style = " width: 100%;"></iframe>
+          <div class="col-md-12 col-lg-12 d-flex align-items-center mb-5 mb-lg-0">
+            <iframe src="/pollution_days" scrolling = "no" height = 500 style = " width: 100%;"></iframe>
           </div>
 
           <!-- ======= Cta Section ======= -->
@@ -315,9 +316,8 @@
             </div>
           </section><!-- End Cta Section -->
 
-          <div class="row">
-            <div class="col-md-12 col-lg-12 d-flex align-items-center mb-5 mb-lg-0">
-              <iframe src="/pollution_months" scrolling = "no" height = 500 style = " width: 100%;"></iframe>
+          <div class="col-md-12 col-lg-12 d-flex align-items-center mb-5 mb-lg-0">
+            <iframe src="/pollution_months" scrolling = "no" height = 500 style = " width: 100%;"></iframe>
           </div>
         </div> 
 

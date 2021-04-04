@@ -56,7 +56,25 @@ def index_hours():
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    score = 50
+    decided = '😌 Bad'
+    opacity = 0.8
+    if score > 25:
+        decided =  '🙁 Poor'
+        opacity = 0.5
+    if score > 50:
+        decided =  '🙂 Good'
+        opacity = 0.1
+    if score > 75:
+        decided =  '😃 Excellent'
+        opacity = 0
+    data=[
+    {
+        'emoji': decided,
+        'opacity': opacity
+    }
+]
+    return render_template("index.html", data = data)
 
 
 @app.route('/api/predictions')
