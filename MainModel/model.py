@@ -1,25 +1,25 @@
 import numpy as np
 from torch import nn
+import torch
 from torch.functional import F
-from DAE.model import DAE
+from dae_model import DAE
 
 class MainModel(nn.Module):
 
-     def __init__(self, enc_input_dim, enc_latent_dim, fc_nodes, init_matrix):
-         self.encoder = DAE(enc_input_dim, enc_latent_dim)
+     def __init__(self, weather_encoder, pollution_encoder):
+         super().__init__()
+         self.weather_encoder = weather_encoder
+         self.pollution_encoder = pollution_encoder
 
-         self.fc = []
-         layer_out_dim = enc_latent_dim
-
-         for num_of_nodes in fc_nodes:
-             self.fc.append(nn.Linear(layer_out_dim, num_of_nodes))
-             layer_out_dim = num_of_nodes
+         self.layer1 = nn.Linear(18, 16)
+         self.layer2 = nn.Linear(16, 8)
+         self.layer3 = nn.Linear(8, 1)
 
      def forward(self, x):
+         w1 = self.weather_encoder(x[:, 2:-7], encode=True)
+         w2 = self.pollution_encoder(x[:, -7:], encode=True)
+         feature = torch.cat([w1, w2, x[:, 0:2]], dim=1)
+         h1 = F.relu(self.layer1(feature))
+         h2 = F.relu(self.layer2(h1))
 
-         y = self.encoder(x, encode = True)
-
-         for idx in range(len(self.fc)):
-             y = self.fc[idx](y)
-
-         return y
+         return self.layer3(h2)

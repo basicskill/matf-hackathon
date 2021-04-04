@@ -25,7 +25,6 @@ class DAE(nn.Module):
 
     def forward(self, x, encode):
         latent = self.encoder(x)
-
         # Run just encoding and prevent gradient from moving in this direction
         if encode:
             return latent.detach()

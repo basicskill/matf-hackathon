@@ -7,18 +7,30 @@ import pandas as pd
 import numpy as np
 from numba import jit
 
-class MainDataset(Dataset):
-     def __init__(self, in_data, target_data):
-         self.X = [torch.tensor(row) for row in in_data]
-         self.y = [torch.tensor(row) for row in target_data]
+class MDataset(Dataset):
+    def __init__(self, data, transform = None, target_transform = None):
+        # Input and target are same
+        self.X = [torch.tensor(row[:-1]).float().to('cuda') for row in data]
+        self.y = [torch.tensor(row[-1:]).float().to('cuda') for row in data]
 
-     def __len__(self):
-         assert(len(self.X) == len(self.y))
-         return len(self.X)
+        # Keep target transform always None
+        # Input transform should be non for basic AE, but noising function for DAE
+        self.transform = transform
+        self.target_transform = None
 
-     def __getitem__(self, idx):
-         inp = self.X[idx]
-         target = self.y[idx]
+    def __len__(self):
+        assert(len(self.X) == len(self.y))
+        return len(self.X)
 
-         sample = {"input": inp, "target": target}
-         return sample
+    def __getitem__(self, idx):
+        inp = self.X[idx]
+        target = self.y[idx]
+
+        if self.transform:
+            inp = self.transform(inp)
+
+        if self.target_transform:
+            assert(False)
+
+        sample = [inp, target]
+        return sample
