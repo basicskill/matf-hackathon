@@ -32,31 +32,95 @@ def create_plot():
 
     return graphJSON
 
+def create_plot_co(csv):
 
-@app.route('/pollution_days')
-def index_days():
+    site_data = pd.read_csv(csv)
+    print(csv)
+    if "hour" in site_data:
+        x_axis = site_data["hour"]
+    else:
+        if "day" in site_data:
+            x_axis = site_data["day"]
+        else:
+            if "month" in site_data:
+                x_axis = site_data["month"]
+    
+    data = [
+        go.Bar(
+            x=x_axis, # assign x as the dataframe column 'x'
+            y= site_data["CO"]
+        )
+    ]
 
-    bar = create_plot()
+    graphJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return graphJSON
+
+def create_plot_aqi(csv):
+
+    site_data = pd.read_csv(csv)
+    print(csv)
+    if "hour" in site_data:
+        x_axis = site_data["hour"]
+    else:
+        if "day" in site_data:
+            x_axis = site_data["day"]
+        else:
+            if "month" in site_data:
+                x_axis = site_data["month"]
+
+    data = [
+        go.Bar(
+            x=x_axis,    # assign x as the dataframe column 'x'
+            y= site_data["AQI"]
+        )
+    ]
+
+    graphJSON = json.dumps(data, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return graphJSON
+
+@app.route('/pollution_hours_co')
+def index_hours_co():
+    csv = 'model/website_daily.csv'
+    bar = create_plot_co(csv)
+    return render_template('test.html', plot=bar)
+
+@app.route('/pollution_hours_aqi')
+def index_hours_aqi():
+    csv = 'model/website_daily.csv'
+    bar = create_plot_aqi(csv)
     return render_template('test.html', plot=bar)
 
 
-@app.route('/pollution_months')
-def index_months():
-
-    bar = create_plot()
+@app.route('/pollution_months_co')
+def index_months_co():
+    csv = 'model/website_yearly.csv'
+    bar = create_plot_co(csv)
     return render_template('test.html', plot=bar)
 
+@app.route('/pollution_months_aqi')
+def index_months_aqi():
+    csv = 'model/website_yearly.csv'
+    bar = create_plot_aqi(csv)
+    return render_template('test.html', plot=bar)
 
-@app.route('/pollution_hours')
-def index_hours():
+@app.route('/pollution_days_co')
+def index_days_co():
+    csv = 'model/website_monthly.csv'
+    bar = create_plot_co(csv)
+    return render_template('test.html', plot=bar)
 
-    bar = create_plot()
+@app.route('/pollution_days_aqi')
+def index_days_aqi():
+    csv = 'model/website_monthly.csv'
+    bar = create_plot_aqi(csv)
     return render_template('test.html', plot=bar)
 
 
 @app.route("/")
 def index():
-    score = 50
+    score = 60
     decided = '😌 Bad'
     opacity = 0.8
     if score > 25:

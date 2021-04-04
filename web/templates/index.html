@@ -148,16 +148,45 @@
         <div class="container" data-aos="zoom-in">
 
           <div class="text-center">
-            <h3>Pollution by hour</h3>
+            <h3>Predictiong Pollution by hour</h3>
             <p> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           </div>
 
         </div>
       </section><!-- End Cta Section -->
       <div class="col-md-12 col-lg-12 d-flex align-items-center mb-5 mb-lg-0">
-        <iframe src="/pollution_hours" scrolling = "no" height = 500 style = " width: 100%;"></iframe>
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">AQI</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">CO</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">SO2</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">PM10</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">PM25</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">O3</button>
+          </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+          <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab"><iframe src="/pollution_hours_aqi" scrolling = "no" height = 500 style = " width: 80vw;"></iframe></div>
+          <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab"><iframe src="/pollution_hours_co" scrolling = "no" height = 500 style = " width: 80vw;"></iframe></div>
+          <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"><iframe src="/pollution_hours_co" scrolling = "no" height = 500 style = " width: 80vw;"></iframe></div>
+        </div>
       </div>
 
+      <div class="section-title" data-aos="fade-in" data-aos-delay="100">
+        <h1>Pollution data</h1>
+        <p>“Water and air, the two essential fluids on which all life depends, have become global garbage cans.” <br>
+          ― Jacques-Yves Cousteau</p>
+      </div>
       <!-- ======= Cta Section ======= -->
       <section class="cta">
         <div class="container" data-aos="zoom-in">
@@ -170,23 +199,75 @@
         </div>
       </section><!-- End Cta Section -->
 
-        <div class="col-md-12 col-lg-12 d-flex align-items-center mb-5 mb-lg-0">
-          <iframe src="/pollution_days" scrolling = "no" height = 500 style = " width: 100%;"></iframe>
+      <div class="col-md-12 col-lg-12 d-flex align-items-center mb-5 mb-lg-0">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="days-home-tab" data-bs-toggle="pill" data-bs-target="#days-home" type="button" role="tab" aria-controls="days-home" aria-selected="true">AQI</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="days-profile-tab" data-bs-toggle="pill" data-bs-target="#days-profile" type="button" role="tab" aria-controls="days-profile" aria-selected="false">CO</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="days-contact-tab" data-bs-toggle="pill" data-bs-target="#days-contact" type="button" role="tab" aria-controls="days-contact" aria-selected="false">SO2</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="days-contact-tab" data-bs-toggle="pill" data-bs-target="#days-contact" type="button" role="tab" aria-controls="days-contact" aria-selected="false">PM10</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="days-contact-tab" data-bs-toggle="pill" data-bs-target="#days-contact" type="button" role="tab" aria-controls="days-contact" aria-selected="false">PM25</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="days-contact-tab" data-bs-toggle="pill" data-bs-target="#days-contact" type="button" role="tab" aria-controls="days-contact" aria-selected="false">O3</button>
+          </li>
+        </ul>
+        <div class="tab-content" id="days-tabContent">
+          <div class="tab-pane fade show active" id="days-home" role="tabpanel" aria-labelledby="days-home-tab"><iframe src="/pollution_days_aqi" scrolling = "no" height = 500 style = " width: 80vw;"></iframe></div>
+          <div class="tab-pane fade" id="days-profile" role="tabpanel" aria-labelledby="days-profile-tab"><iframe src="/pollution_days_co" scrolling = "no" height = 500 style = " width: 80vw;"></iframe></div>
+          <div class="tab-pane fade" id="days-contact" role="tabpanel" aria-labelledby="days-contact-tab"><iframe src="/pollution_days_co" scrolling = "no" height = 500 style = " width: 80vw;"></iframe></div>
         </div>
+      </div>
 
       <!-- ======= Cta Section ======= -->
       <section class="cta">
         <div class="container" data-aos="zoom-in">
 
           <div class="text-center">
-            <h3>Pollution by hours</h3>
+            <h3>Pollution by Months</h3>
             <p> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           </div>
 
+
+
         </div>
       </section><!-- End Cta Section -->
+
+
       <div class="col-md-12 col-lg-12 d-flex align-items-center mb-5 mb-lg-0">
-        <iframe src="/pollution_months" scrolling = "no" height = 500 style = " width: 100%;"></iframe>
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="months-home-tab" data-bs-toggle="pill" data-bs-target="#months-home" type="button" role="tab" aria-controls="months-home" aria-selected="true">AQI</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="months-profile-tab" data-bs-toggle="pill" data-bs-target="#months-profile" type="button" role="tab" aria-controls="months-profile" aria-selected="false">CO</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="months-contact-tab" data-bs-toggle="pill" data-bs-target="#months-contact" type="button" role="tab" aria-controls="months-contact" aria-selected="false">SO2</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="months-contact-tab" data-bs-toggle="pill" data-bs-target="#months-contact" type="button" role="tab" aria-controls="months-contact" aria-selected="false">PM10</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="months-contact-tab" data-bs-toggle="pill" data-bs-target="#months-contact" type="button" role="tab" aria-controls="months-contact" aria-selected="false">PM25</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="months-contact-tab" data-bs-toggle="pill" data-bs-target="#months-contact" type="button" role="tab" aria-controls="months-contact" aria-selected="false">O3</button>
+          </li>
+        </ul>
+        <div class="tab-content" id="months-tabContent">
+          <div class="tab-pane fade show active" id="months-home" role="tabpanel" aria-labelledby="months-home-tab"><iframe src="/pollution_months_aqi" scrolling = "no" height = 500 style = " width: 80vw;"></iframe></div>
+          <div class="tab-pane fade" id="months-profile" role="tabpanel" aria-labelledby="months-profile-tab"><iframe src="/pollution_months_co" scrolling = "no" height = 500 style = " width: 80vw;"></iframe></div>
+          <div class="tab-pane fade" id="months-contact" role="tabpanel" aria-labelledby="months-contact-tab"><iframe src="/pollution_months_co" scrolling = "no" height = 500 style = " width: 80vw;"></iframe></div>
+        </div>
       </div>
     </div> 
 
