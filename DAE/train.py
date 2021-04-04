@@ -11,6 +11,7 @@ from data_loaders import AEDataset, addNoise
 
 def train_loop(data_loader, model, loss_fn, optimizer):
     model.train()
+
     size = len(data_loader.dataset)
     for batch, (X, y) in enumerate(data_loader):
         pred = model(X, encode = False)
@@ -21,7 +22,7 @@ def train_loop(data_loader, model, loss_fn, optimizer):
         loss.backward()
         optimizer.step()
 
-        if batch % 64 == 0:
+        if batch % 100 == 0:
             loss, current = loss.item(), batch * len(X)
             print(f"loss: {loss:>7f}  [{current:>5d}/{size:>5d}]")
 
@@ -38,6 +39,12 @@ def valid_loop(data_loader, model, loss_fn):
             losses.append(loss)
 
     print(f"Validation avg loss: {sum(losses) / len(losses):>8f} \n")
+    with torch.no_grad():
+        (X, y) = next(iter(data_loader))
+        pred = model(X, encode = False)
+        print(y[0])
+        print(pred[0])
+    return sum(losses) / len(losses)
 
 def test(data_loader, model, loss_fn):
     model.eval()
@@ -81,16 +88,21 @@ def apply_min_max(in_data, min_values, max_values):
     return out_data
 
 if __name__ == "__main__":
-    epochs = 100
-    batch_size = 64
-    learning_rate = 1e-3
+    epochs = 5000
+    batch_size = 128
 
     input_size = 34
     latent_size = 8
+    
     model = DAE(input_size, latent_size)
     model.to('cuda')
+    torch.backends.cudnn.benchmark = True
+    
     loss_fn = nn.MSELoss()
-    optimizer = optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate)
+    optimizer = torch.optim.SGD(model.parameters(), lr=0.1, momentum=0.9)
+    DECAY = 0.95
+    scheduler = LambdaLR(optimizer, lr_lambda = lambda t : DECAY**t)
+
 
     data = pd.read_csv("model/training_test_data.csv")
     data.sample(frac = 1, random_state = 200)
@@ -120,7 +132,7 @@ if __name__ == "__main__":
     np.argwhere(np.isnan(weather_test))
     weather_test = apply_min_max(weather_test, min_values, max_values)
 
-    training_dataset = AEDataset(weather_train, transform=addNoise)
+    training_dataset = AEDataset(weather_train)
     training_loader = DataLoader(training_dataset, batch_size=batch_size, shuffle=True)
 
     validation_dataset = AEDataset(weather_valid)
@@ -129,9 +141,17 @@ if __name__ == "__main__":
     test_dataset = AEDataset(weather_test)
     test_loader = DataLoader(test_dataset)
 
+    valid_losses = []
     for t in range(epochs):
         print(f"Epoch {t+1}\n-------------------------------")
         train_loop(training_loader, model, loss_fn, optimizer)
-        valid_loop(validation_loader, model, loss_fn)
+        val_loss = valid_loop(validation_loader, model, loss_fn)
+        print(optimizer.param_groups[0]['lr'])
+        torch.save(model, "DAE/weather_train/model" + str(t) + ".pth")
+        valid_losses.append(val_loss)
+
+        if t % 200 == 0:    
+            scheduler.step()
     
+    np.savetxt("DAE/weather_train/valid.txt", np.array(valid_losses))
     test(test_loader, model, loss_fn)

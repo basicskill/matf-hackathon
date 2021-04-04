@@ -8,16 +8,18 @@ import numpy as np
 from numba import jit
 
 def addNoise(data):
-    data_copy = data.clone()
-    mask = torch.cuda.FloatTensor(data.shape).uniform_() > 0.2
-    data_copy[mask] = -1
-    return data_copy
+    print(data.shape)
+    mask = np.random.rand(data.shape[0], data.shape[1]) > 0.8
+    data[mask] = -1
+    return data
 
 
 class AEDataset(Dataset):
     def __init__(self, data, transform = None, target_transform = None):
         # Input and target are same
-        self.X = [torch.tensor(row).float().to('cuda') for row in data]
+        data_copy = np.copy(data)
+        data_copy = addNoise(data_copy)
+        self.X = [torch.tensor(row).float().to('cuda') for row in data_copy]
         self.y = [torch.tensor(row).float().to('cuda') for row in data]
 
         # Keep target transform always None
@@ -39,21 +41,5 @@ class AEDataset(Dataset):
         if self.target_transform:
             assert(False)
 
-        sample = {"input": inp, "target": target}
-        return sample
-
-class FCDataset(Dataset):
-    def __init__(self, in_data, target_data):
-        self.X = [torch.tensor(row) for row in in_data]
-        self.y = [torch.tensor(row) for row in target_data]
-
-    def __len__(self):
-        assert(len(self.X) == len(self.y))
-        return len(self.X)
-
-    def __getitem__(self, idx):
-        inp = self.X[idx]
-        target = self.y[idx]
-
-        sample = {"input": inp, "target": target}
+        sample = [inp, target]
         return sample
